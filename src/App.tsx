@@ -19,7 +19,10 @@ function WinnerScreen({
         left: 0,
         width: '100vw',
         height: '100vh',
-        background: '#1f1f1f',
+        backgroundImage: 'url(/FONDO.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -150,7 +153,7 @@ function WinnerScreen({
             {/* Imagen del premio ganado - 70% */}
             <div
               style={{
-                width: '70%',
+                width: '80%',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center'
@@ -434,7 +437,7 @@ export default function App() {
                   src="/loto.png"
                   alt="Loto"
                   style={{
-                    maxWidth: '500px',
+                    maxWidth: '450px',
                     width: '90%',
                     height: 'auto'
                   }}
@@ -473,8 +476,8 @@ export default function App() {
                         src="/Esfera.png"
                         alt={`Esfera ${i + 1}`}
                         style={{
-                          width: '120px',
-                          height: '120px',
+                          width: '110px',
+                          height: '110px',
                           display: 'block'
                         }}
                       />
@@ -516,7 +519,7 @@ export default function App() {
                       style={{
                         maxWidth: '600px',
                         width: '100%',
-                        height: 'auto'
+                        height: '180px'
                       }}
                     />
                     {/* Premio.png arriba del cuadrado */}
@@ -561,12 +564,8 @@ export default function App() {
                           onError={(e) => (e.currentTarget.src = '/placeholder.png')}
                           alt="Premio ganado"
                           style={{
-                            maxWidth: '100%',
-                            maxHeight: '100%',
-                            width: 'auto',
-                            height: 'auto',
-                            objectFit: 'contain',
-                            borderRadius: '8px'
+                            width: '600px',
+                            height: '300px'
                           }}
                         />
                       </div>
