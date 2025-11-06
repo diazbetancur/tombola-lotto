@@ -243,7 +243,7 @@ export default function App() {
           }
           return cur;
         });
-      }, 1000 * i); // 1 segundo entre cada número
+      }, 2000 + 1000 * i); // Delay inicial de 2 segundos + 1 segundo entre cada número
     });
   }
 
