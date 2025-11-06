@@ -2,69 +2,6 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 
 type Prize = { id: string; name: string; imageUrl: string };
 
-function Ball({ digit, reveal }: { digit: string; reveal?: boolean }) {
-  return (
-    <div
-      className={`ball ${reveal ? 'reveal' : ''}`}
-      style={{
-        width: 90,
-        height: 90,
-        borderRadius: '50%',
-        display: 'grid',
-        placeItems: 'center',
-        fontSize: '2.5rem',
-        fontWeight: 800,
-        color: '#000',
-        border: '3px solid #333',
-        background: '#fff',
-        boxShadow: '0 4px 12px rgba(0,0,0,.3)',
-        transform: reveal ? 'scale(1)' : 'scale(.9)',
-        transition: 'transform .18s ease'
-      }}
-    >
-      {digit}
-    </div>
-  );
-}
-
-function Pedestal({ currentDigit }: { currentDigit: string }) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-      {/* Balota grande sobre pedestal */}
-      <div
-        className="pedestal-ball"
-        style={{
-          width: 160,
-          height: 160,
-          borderRadius: '50%',
-          display: 'grid',
-          placeItems: 'center',
-          fontSize: '5rem',
-          fontWeight: 800,
-          color: '#000',
-          border: '4px solid #333',
-          background: '#fff',
-          boxShadow: '0 6px 24px rgba(0,0,0,.4)',
-          animation: currentDigit ? 'popIn 0.4s ease-out' : 'none'
-        }}
-      >
-        {currentDigit}
-      </div>
-      {/* Cajón/base del pedestal */}
-      <div
-        style={{
-          width: 180,
-          height: 80,
-          background: 'linear-gradient(to bottom, #8b4513, #654321)',
-          borderRadius: '10px',
-          boxShadow: '0 6px 12px rgba(0,0,0,.5)',
-          border: '3px solid #5c3317'
-        }}
-      />
-    </div>
-  );
-}
-
 function WinnerScreen({
   digits,
   prize,
@@ -92,84 +29,147 @@ function WinnerScreen({
         animation: 'fadeIn 0.5s ease-out'
       }}
     >
-      {/* Logo superior izquierdo */}
+      {/* Logo superior derecho - logo.png */}
       <div style={{ position: 'absolute', top: 30, left: 30 }}>
-        <div
+        <img
+          src="/loto.png"
+          alt="Loto"
           style={{
-            width: 80,
-            height: 80,
-            background: '#444',
-            borderRadius: '50%',
-            display: 'grid',
-            placeItems: 'center',
-            fontSize: '0.8rem',
-            color: '#fff'
+            width: '500px',
+            height: 'auto'
           }}
-        >
-          LOGO
-        </div>
+        />
       </div>
 
       {/* Contenido central */}
-      <div style={{ textAlign: 'center', maxWidth: 600 }}>
-        <h1 style={{ fontSize: '4rem', margin: '0 0 2rem 0', color: '#ffd700' }}>GANADOR</h1>
+      <div style={{ textAlign: 'center', maxWidth: 800 }}>
+        {/* Imagen winner.png en lugar de texto GANADOR */}
+        <div style={{ marginBottom: '2rem' }}>
+          <img
+            src="/winner.png"
+            alt="Winner"
+            style={{
+              maxWidth: '500px',
+              width: '100%',
+              height: 'auto'
+            }}
+          />
+        </div>
 
-        {/* Números ganadores */}
-        <div style={{ display: 'flex', gap: 20, justifyContent: 'center', marginBottom: '2rem' }}>
+        {/* Números ganadores con esferas */}
+        <div style={{ display: 'flex', gap: 20, justifyContent: 'center', marginBottom: '3rem' }}>
           {digits.map((d, i) => (
             <div
               key={i}
               style={{
-                width: 80,
-                height: 80,
-                borderRadius: '50%',
-                display: 'grid',
-                placeItems: 'center',
-                fontSize: '2.5rem',
-                fontWeight: 800,
-                color: '#000',
-                background: '#fff',
-                boxShadow: '0 4px 16px rgba(255,215,0,.4)',
-                border: '3px solid #ffd700'
+                position: 'relative',
+                display: 'inline-block'
               }}
             >
-              {d}
+              <img
+                src="/Esfera.png"
+                alt={`Esfera ${i + 1}`}
+                style={{
+                  width: '150px',
+                  height: '150px',
+                  display: 'block'
+                }}
+              />
+              {/* Número encima de la esfera */}
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  fontSize: '4rem',
+                  fontWeight: 'bold',
+                  color: '#000',
+                  textShadow: '0 0 4px rgba(255,255,255,0.8)'
+                }}
+              >
+                {d}
+              </div>
             </div>
           ))}
         </div>
 
-        {/* Premio */}
-        <div style={{ marginBottom: '1.5rem' }}>
-          <img
-            src={prize.imageUrl}
-            onError={(e) => (e.currentTarget.src = '/placeholder.png')}
-            alt={prize.name}
-            style={{
-              maxWidth: 400,
-              width: '100%',
-              borderRadius: 12,
-              boxShadow: '0 8px 24px rgba(0,0,0,.3)'
-            }}
-          />
-        </div>
-        <h2 style={{ fontSize: '2rem', color: '#fff', margin: 0 }}>{prize.name}</h2>
-      </div>
-
-      {/* Logo inferior derecho */}
-      <div style={{ position: 'absolute', bottom: 30, right: 30 }}>
+        {/* Rectángulo con Premio.png (30%) e imagen del premio (70%) */}
         <div
           style={{
-            width: 100,
-            height: 100,
-            background: '#444',
-            borderRadius: '50%',
-            display: 'grid',
-            placeItems: 'center',
-            fontSize: '0.9rem',
-            color: '#fff'
+            position: 'relative',
+            display: 'inline-block',
+            width: '100%',
+            maxWidth: '900px'
           }}
         >
-          LOGO
+          <img
+            src="/rectangulo.png"
+            alt="Rectángulo"
+            style={{
+              width: '100%',
+              height: 'auto',
+              display: 'block'
+            }}
+          />
+          {/* Contenido sobre el rectángulo */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '90%',
+              height: '80%',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '1rem',
+              padding: '1rem'
+            }}
+          >
+            {/* Premio.png - 30% */}
+            <div
+              style={{
+                width: '30%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+            >
+              <img
+                src="/Premio.png"
+                alt="Premio"
+                style={{
+                  maxWidth: '100%',
+                  maxHeight: '100%',
+                  width: 'auto',
+                  height: 'auto'
+                }}
+              />
+            </div>
+            {/* Imagen del premio ganado - 70% */}
+            <div
+              style={{
+                width: '70%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+            >
+              <img
+                src={prize.imageUrl}
+                onError={(e) => (e.currentTarget.src = '/placeholder.png')}
+                alt={prize.name}
+                style={{
+                  maxWidth: '100%',
+                  maxHeight: '100%',
+                  width: 'auto',
+                  height: 'auto',
+                  borderRadius: '8px'
+                }}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -184,7 +184,6 @@ export default function App() {
     'editing'
   );
   const [revealed, setRevealed] = useState<string[]>([]);
-  const [currentDigit, setCurrentDigit] = useState<string>('');
   const [showWinner, setShowWinner] = useState(false);
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
 
@@ -229,29 +228,22 @@ export default function App() {
     if (!canStart) return;
     setPhase('running');
     setRevealed([]);
-    setCurrentDigit('');
 
     digits.forEach((d, i) => {
       setTimeout(() => {
-        // Mostrar en pedestal
-        setCurrentDigit(d);
-
-        // Después de 1200ms, pasar a balotas reveladas
-        setTimeout(() => {
-          setRevealed((prev) => {
-            const cur = [...prev, d];
-            if (cur.length === 3) {
-              // Al terminar, esperar 3 segundos y mostrar pantalla ganador
-              setTimeout(() => {
-                setPhase('done');
-                setTimeout(() => setShowWinner(true), 3000);
-              }, 500);
-            }
-            return cur;
-          });
-          setCurrentDigit('');
-        }, 1200);
-      }, 2800 * i);
+        setRevealed((prev) => {
+          const cur = [...prev, d];
+          if (cur.length === 5) {
+            // Al completar todos los números, esperar 5 segundos y mostrar pantalla final
+            setTimeout(() => {
+              setPhase('done');
+              // Después de otros 5 segundos, mostrar pantalla ganador
+              setTimeout(() => setShowWinner(true), 5000);
+            }, 500);
+          }
+          return cur;
+        });
+      }, 1000 * i); // 1 segundo entre cada número
     });
   }
 
@@ -270,15 +262,35 @@ export default function App() {
   return (
     <div
       style={{
-        background: '#1f1f1f',
+        background: '#000',
         color: '#eee',
         minHeight: '100vh',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 16
+        padding: 0,
+        position: 'relative',
+        overflow: 'hidden'
       }}
     >
+      {/* Fondo con tombola.gif */}
+      {phase !== 'editing' && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundImage: 'url(/tombola.gif)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            zIndex: 0
+          }}
+        />
+      )}
+
       {/* Pantalla de ganador - overlay completo */}
       {showWinner && selectedPrize && (
         <WinnerScreen
@@ -371,123 +383,202 @@ export default function App() {
         {phase !== 'editing' && (
           <>
             {phase === 'ready' && (
-              <button
-                onClick={onStart}
-                style={{
-                  padding: '10px 18px',
-                  borderRadius: 8,
-                  background: '#22c55e',
-                  border: '1px solid #333',
-                  color: '#0a1e0d',
-                  fontWeight: 700,
-                  marginBottom: 18
-                }}
-              >
-                Iniciar (Enter / Espacio)
-              </button>
-            )}
-
-            {/* Layout: Tómbola y Pedestal lado a lado en la parte superior */}
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'flex-start',
-                gap: 80,
-                marginBottom: 60,
-                marginTop: 40
-              }}
-            >
-              {/* Tómbola giratoria */}
-              <div
-                className={`tombola ${phase === 'running' ? 'running' : ''}`}
-                style={{
-                  height: 200,
-                  display: 'grid',
-                  placeItems: 'center'
-                }}
-              >
-                <div
-                  className="drum"
-                  style={{
-                    width: 180,
-                    height: 180,
-                    borderRadius: '50%',
-                    border: '12px solid #777',
-                    borderTopColor: 'transparent',
-                    position: 'relative',
-                    boxShadow: '0 6px 20px rgba(0,0,0,.4)'
-                  }}
-                />
-              </div>
-
-              {/* Pedestal con dígito actual */}
-              <Pedestal currentDigit={currentDigit} />
-            </div>
-
-            {/* Logo debajo del pedestal (centrado) y balotas lado a lado */}
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                gap: 60,
-                marginBottom: 50
-              }}
-            >
-              {/* Balotas reveladas */}
-              <div style={{ display: 'flex', gap: 20, justifyContent: 'center' }}>
-                {revealed.map((d, i) => (
-                  <Ball key={`r-${i}`} digit={d} reveal />
-                ))}
-                {Array.from({ length: Math.max(0, 5 - revealed.length) }).map((_, i) => (
-                  <Ball key={`e-${i}`} digit="" />
-                ))}
-              </div>
-
-              {/* Logo al lado de las balotas */}
               <div
                 style={{
-                  width: 120,
-                  height: 120,
-                  background: '#444',
-                  borderRadius: '50%',
-                  display: 'grid',
-                  placeItems: 'center',
-                  fontSize: '1rem',
-                  color: '#fff',
-                  boxShadow: '0 4px 8px rgba(0,0,0,.3)'
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  width: '100vw',
+                  height: '100vh',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  background: '#1f1f1f',
+                  zIndex: 100
                 }}
-              >
-                LOGO
-              </div>
-            </div>
-
-            {/* Resultado final (antes de mostrar pantalla ganador) */}
-            {phase === 'done' && selectedPrize && !showWinner && (
-              <div
-                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}
               >
                 <img
-                  src={selectedPrize.imageUrl}
-                  onError={(e) => (e.currentTarget.src = '/placeholder.png')}
-                  alt="Premio"
-                  style={{ maxWidth: 520, width: '100%', borderRadius: 10 }}
+                  src="/start.png"
+                  alt="Presiona para iniciar"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    cursor: 'pointer'
+                  }}
+                  onClick={onStart}
                 />
-                <h2 style={{ margin: 0, color: '#fff' }}>{selectedPrize.name}</h2>
+              </div>
+            )}
+
+            {/* Layout: Lado derecho con elementos centrados */}
+            {(phase === 'running' || phase === 'done') && (
+              <div
+                style={{
+                  position: 'fixed',
+                  right: 0,
+                  top: 0,
+                  width: '50vw',
+                  height: '100vh',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '2rem',
+                  zIndex: 10,
+                  padding: '2rem'
+                }}
+              >
+                {/* Logo loto.png */}
+                <img
+                  src="/loto.png"
+                  alt="Loto"
+                  style={{
+                    maxWidth: '500px',
+                    width: '90%',
+                    height: 'auto'
+                  }}
+                />
+
+                {/* Imagen winner.png */}
+                <img
+                  src="/winner.png"
+                  alt="Winner"
+                  style={{
+                    maxWidth: '300px',
+                    width: '70%',
+                    height: 'auto'
+                  }}
+                />
+
+                {/* 5 Esferas con números */}
+                <div
+                  style={{
+                    display: 'flex',
+                    gap: '1rem',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexWrap: 'wrap'
+                  }}
+                >
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        position: 'relative',
+                        display: 'inline-block'
+                      }}
+                    >
+                      <img
+                        src="/Esfera.png"
+                        alt={`Esfera ${i + 1}`}
+                        style={{
+                          width: '120px',
+                          height: '120px',
+                          display: 'block'
+                        }}
+                      />
+                      {/* Número encima de la esfera */}
+                      {revealed[i] && (
+                        <div
+                          style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            fontSize: '3rem',
+                            fontWeight: 'bold',
+                            color: '#000',
+                            textShadow: '0 0 4px rgba(255,255,255,0.8)'
+                          }}
+                        >
+                          {revealed[i]}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Cuadrado.png - Mostrar cuando termine */}
+                {(phase === 'done' || phase === 'running') && (
+                  <div
+                    style={{
+                      position: 'relative',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      gap: '1rem'
+                    }}
+                  >
+                    <img
+                      src="/Cuadrado.png"
+                      alt="Cuadrado"
+                      style={{
+                        maxWidth: '600px',
+                        width: '100%',
+                        height: 'auto'
+                      }}
+                    />
+                    {/* Premio.png arriba del cuadrado */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: '0%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        textAlign: 'center',
+                        width: '80%'
+                      }}
+                    >
+                      <img
+                        src="/Premio.png"
+                        alt="Premio"
+                        style={{
+                          maxWidth: '150px',
+                          width: '90%',
+                          height: 'auto'
+                        }}
+                      />
+                    </div>
+                    {/* Imagen del premio seleccionado en el centro del cuadrado */}
+                    {selectedPrize && (
+                      <div
+                        style={{
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)',
+                          textAlign: 'center',
+                          width: '70%',
+                          height: '60%',
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center'
+                        }}
+                      >
+                        <img
+                          src={selectedPrize.imageUrl}
+                          onError={(e) => (e.currentTarget.src = '/placeholder.png')}
+                          alt="Premio ganado"
+                          style={{
+                            maxWidth: '100%',
+                            maxHeight: '100%',
+                            width: 'auto',
+                            height: 'auto',
+                            objectFit: 'contain',
+                            borderRadius: '8px'
+                          }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             )}
           </>
         )}
 
         <style>{`
-          .running .drum { animation: spin .9s linear infinite; }
-          @keyframes spin { to { transform: rotate(360deg); } }
-          @keyframes popIn {
-            0% { transform: scale(0.5); opacity: 0; }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); opacity: 1; }
-          }
           @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }

@@ -1,14 +1,7 @@
 [
   {
-    "id": "tv-55",
-    "name": "Televisor 55\"",
-    "imageUrl": "https://picsum.photos/seed/tv55/600/400"
-  },
-  {
-    "id": "smartphone",
-    "name": "Smartphone",
-    "imageUrl": "https://picsum.photos/seed/phone/600/400"
-  },
-  { "id": "bicicleta", "name": "Bicicleta", "imageUrl": "https://picsum.photos/seed/bike/600/400" },
-  { "id": "viaje", "name": "Viaje", "imageUrl": "https://picsum.photos/seed/trip/600/400" }
+    "id": "1000",
+    "name": "1000",
+    "imageUrl": "../1000.png"
+  }
 ]
